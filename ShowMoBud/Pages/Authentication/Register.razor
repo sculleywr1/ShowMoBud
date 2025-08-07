@@ -1,31 +1,41 @@
-﻿@page "/register"
-@inherits RegisterBase
+﻿@inherits RegisterBase
 
-<MudPaper Class="register-form" Elevation="4">
-    <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">Register</MudText>
+<div class="overlay-backdrop">
 
-    <EditForm Model="@registration" OnValidSubmit="HandleRegister">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <MudPaper Class="register-form" Elevation="4">
+        <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">Register</MudText>
 
-        <MudStack Spacing="2">
+        <EditForm Model="@registration" OnValidSubmit="HandleRegister">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
-            <MudTextField @bind-Value="registration.Username" Label="Username" For="@(() => registration.Username)" Variant="Variant.Outlined" />
-            <MudTextField @bind-Value="registration.Email" Label="Email" For="@(() => registration.Email)" Variant="Variant.Outlined" />
-            <MudTextField @bind-Value="registration.Password" Label="Password" For="@(() => registration.Password)" Variant="Variant.Outlined" InputType="InputType.Password" />
-            <MudTextField @bind-Value="registration.ConfirmPassword" Label="Confirm Password" For="@(() => registration.ConfirmPassword)" Variant="Variant.Outlined" InputType="InputType.Password" />
+            <MudStack Spacing="2">
+                <MudTextField @bind-Value="registration.Username" Label="Username" For="@(() => registration.Username)" Variant="Variant.Outlined" />
+                <MudTextField @bind-Value="registration.Email" Label="Email" For="@(() => registration.Email)" Variant="Variant.Outlined" />
+                <MudTextField @bind-Value="registration.Password" Label="Password" For="@(() => registration.Password)" Variant="Variant.Outlined" InputType="InputType.Password" />
+                <MudTextField @bind-Value="registration.ConfirmPassword" Label="Confirm Password" For="@(() => registration.ConfirmPassword)" Variant="Variant.Outlined" InputType="InputType.Password" />
 
-            <MudButton Color="Color.Primary" Variant="Variant.Filled" Type="Submit" FullWidth="true">
-                Continue to ID Verification
-            </MudButton>
-        </MudStack>
+                <MudButton OnClick="HandleRegister" Color="Color.Primary" Variant="Variant.Filled" Type="Submit" FullWidth="true">
+                    Continue to ID Verification
+                </MudButton>
 
-    </EditForm>
+                <MudButton Color="Color.Secondary" Variant="Variant.Outlined" OnClick="async () => await OnClose.InvokeAsync()" Class="mt-2">
+                    Cancel
+                </MudButton>
+            </MudStack>
 
-    @if (!string.IsNullOrEmpty(errorMessage))
-    {
-        <MudAlert Severity="Severity.Error" Class="mt-4">
-            @errorMessage
-        </MudAlert>
-    }
-</MudPaper>
+            
+        </EditForm>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-4">
+                @errorMessage
+            </MudAlert>
+        }
+    </MudPaper>
+
+    
+
+
+</div>

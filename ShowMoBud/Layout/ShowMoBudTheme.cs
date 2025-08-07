@@ -9,15 +9,15 @@ namespace ShowMoBud.Layout
         {
             PaletteDark = new PaletteDark()
             {
-                Primary = "#00FF00", // Bright green primary color
-                Secondary = "#FFFF00", // Bright yellow secondary color
-                Background = "#000000", // Black background
-                AppbarBackground = "#00FF00", // Bright green app bar background
+                Primary = "#31a924", // Light primary color
+                Secondary = "#ac840a", // Orange secondary color
+                Background = "#060d07", // Dark background
+                AppbarBackground = "#E5E2D9", // Light gray app bar background
                 DrawerBackground = "#111111", // Dark gray drawer background
-                Surface = "1C1C1C", // Dark gray surface
+                Surface = "#1C1C1C", // Dark gray surface
                 TextPrimary = "#FFFFFF", // White text for primary text
-                TextSecondary = "#AAAAAA", // Light gray text for secondary text    
-                ActionDefault = "#00FF00", // Bright green for default actions
+                TextSecondary = "#31a924", // Light gray text for secondary text    
+                ActionDefault = "#31a924", // Bright green for default actions
             }
         };
 

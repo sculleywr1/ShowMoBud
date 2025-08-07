@@ -1,7 +1,38 @@
 ﻿@page "/"
 
+@using MudBlazor
+@using ShowMoBud.Pages.Authentication
+@inject IJSRuntime JS
+
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+<MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="OpenRegister">Register</MudButton>
+
+<div class="fade-wrapper">
+    @if (showRegister)
+    {
+        <div class="overlay-backdrop">
+            <Register OnClose="CloseRegister" @key="showRegister" />
+        </div>
+    }
+</div>
+
+@code
+{
+    private bool showRegister = false;
+    private async Task OpenRegister()
+    {
+        await Task.Yield();
+        showRegister = true;
+    }
+    private async Task CloseRegister()
+    {
+        await Task.Yield();
+        showRegister = false;
+    }
+
+}
