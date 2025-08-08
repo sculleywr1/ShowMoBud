@@ -75,3 +75,7 @@
 code {
     color: #c02d76;
 }
+
+.smb-overlay-z {
+    z-index: 1300;
+}

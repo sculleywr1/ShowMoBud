@@ -1,0 +1,68 @@
+﻿@inherits NavbarBase
+@using MudBlazor
+@inject NavigationManager Nav
+
+<MudAppBar Elevation="4"
+           Fixed="true"
+           Color="Color.Transparent"
+           Class="smb-appbar">
+
+    <MudText Typo="Typo.h6" Class="smb-appbar-title" OnClick="NavigateHome" Style="cursor: pointer;">
+        ShowMoBud
+    </MudText>
+
+    <MudSpacer />
+
+    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+
+        <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/information">Information</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Inherit">Community</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/events">Events &amp; St Louis Area</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/dispensaries">Dispensaries</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/vision">Vision</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/roadmap">Road Map</MudButton>
+
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="TriggerRegister">
+            Registration/Login
+        </MudButton>
+
+    </MudHidden>
+
+    <MudHidden Breakpoint="Breakpoint.MdAndUp">
+
+        <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                       Color="Color.Inherit"
+                       AriaLabel="Open navigation menu"
+                       @onclick="() => _mobileMenuOpen = true" />
+
+    </MudHidden>
+
+</MudAppBar>
+
+<MudDrawer @bind-Open="_mobileMenuOpen"
+           Anchor="Anchor.Right"
+           Variant="DrawerVariant.Temporary"
+           Elevation="8"
+           Overlay="true">
+    <MudDrawerHeader>
+        <MudText Typo="Typo.h6">Menu</MudText>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.Close"
+                       AriaLabel="Close navigation menu"
+                       @onclick="() => _mobileMenuOpen = false" />
+    </MudDrawerHeader>
+
+    <MudNavMenu Dense="true">
+        <MudNavLink Href="/information" Match="NavLinkMatch.Prefix" @onclick="CloseMenu">Information</MudNavLink>
+        <MudNavLink Href="/survey" Match="NavLinkMatch.Prefix">Community</MudNavLink>
+        <MudNavLink Href="/events" Match="NavLinkMatch.Prefix" @onclick="CloseMenu">Events &amp; St Louis Area</MudNavLink>
+        <MudNavLink Href="/dispensaries" Match="NavLinkMatch.Prefix" @onclick="CloseMenu">Dispensaries</MudNavLink>
+        <MudNavLink Href="/vision" Match="NavLinkMatch.Prefix" @onclick="CloseMenu">Vision</MudNavLink>
+        <MudNavLink Href="/roadmap" Match="NavLinkMatch.Prefix" @onclick="CloseMenu">Road Map</MudNavLink>
+        <MudDivider Class="my-2" />
+        <MudNavLink Match="NavLinkMatch.Prefix" OnClick="TriggerRegister">
+            Registration / Login
+        </MudNavLink>
+    </MudNavMenu>
+</MudDrawer>
+

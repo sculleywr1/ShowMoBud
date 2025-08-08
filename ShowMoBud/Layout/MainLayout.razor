@@ -1,5 +1,8 @@
 ﻿@inherits LayoutComponentBase
 @using ShowMoBud.Layout
+@using ShowMoBud.Pages.Shared
+@using ShowMoBud.Pages.Authentication
+@using MudBlazor
 
 
 
@@ -7,5 +10,29 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
+<Navbar OnOpenRegister="OpenRegister" />
+
+<div style="height:64px"></div>
+
 @Body
 
+@if (showRegister)
+{
+    <div class="overlay-backdrop smb-overlay-z">
+        <Register OnClose="CloseRegister" @key="showRegister" />
+    </div>
+}
+
+@code {
+    private bool showRegister = false;
+    public async Task OpenRegister()
+    {
+        showRegister = true;
+        await InvokeAsync(StateHasChanged);
+    }
+    public async Task CloseRegister()
+    {
+        showRegister = false;
+        await InvokeAsync(StateHasChanged);
+    }
+}
