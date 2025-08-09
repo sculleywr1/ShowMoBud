@@ -1,0 +1,15 @@
+﻿@inherits DispensaryMapBase
+
+<div class="map-toolbar">
+    <MudTextField @bind-Value="_radiusMiles"
+                  Label="Radius (miles)"
+                  Variant="Variant.Outlined"
+                  Style="max-width:160px" />
+    <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="FindNearMe">
+        Find Near Me
+    </MudButton>
+</div>
+
+<div id="@_mapId" class="smb-map"></div>
+
+

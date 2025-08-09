@@ -1,10 +1,13 @@
 ﻿@page "/"
 
 @using MudBlazor
+@using ShowMoBud.Components
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<MudContainer class=" smb-page-pad smb-page-narrow" MaxWidth="MaxWidth.False">
+    <MudText Typo="Typo.h5">Find dispensaries near you</MudText>
 
-Welcome to your new app.
+    <DispensaryMap />
+</MudContainer>
 

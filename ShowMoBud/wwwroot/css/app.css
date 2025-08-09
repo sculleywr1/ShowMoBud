@@ -1,4 +1,4 @@
-.valid.modified:not([type=checkbox]) {
+﻿.valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }
 
@@ -78,4 +78,31 @@ code {
 
 .smb-overlay-z {
     z-index: 1300;
+}
+/* Page/container padding */
+.smb-page-pad {
+    padding-inline: 1cm; /* ≈ 0.39in left/right on desktop */
+}
+
+/* Tighter padding on small screens */
+@media (max-width: 600px) {
+    .smb-page-pad {
+        padding-inline: 14px; /* comfy mobile gutter */
+    }
+}
+
+/* Optional: limit max width so it never stretches edge-to-edge on huge screens */
+.smb-page-narrow {
+    max-width: 1280px;
+    margin-inline: auto;
+}
+
+/* Keep your map styling as-is */
+.smb-map {
+    width: 100%;
+    height: 420px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    margin-top: 12px;
 }
