@@ -1,18 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using ShowMoBudAPI.Models;
 
 namespace ShowMoBudAPI.Contexts;
 
 public partial class ShowMoBudContext : DbContext
 {
-    public ShowMoBudContext()
-    {
-    }
-
     public ShowMoBudContext(DbContextOptions<ShowMoBudContext> options)
         : base(options)
     {
     }
+
+    public virtual DbSet<NewsletterSignup> NewsletterSignups { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
 
@@ -24,10 +24,19 @@ public partial class ShowMoBudContext : DbContext
 
     public virtual DbSet<UserProfile> UserProfiles { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=ShowMoBud;Trusted_Connection=True;TrustServerCertificate=True;");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<NewsletterSignup>(entity =>
+        {
+            entity.HasKey(e => e.SignupId);
+
+            entity.HasIndex(e => e.Email, "ux_NewsletterSignupsEmail").IsUnique();
+
+            entity.Property(e => e.Email).HasMaxLength(320);
+            entity.Property(e => e.FirstName).HasMaxLength(100);
+            entity.Property(e => e.PhoneNumber).HasMaxLength(15);
+        });
+
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE1A2BB7AE96");

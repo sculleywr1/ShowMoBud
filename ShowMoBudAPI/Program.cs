@@ -1,5 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using ShowMoBudAPI.Contexts;
+using ShowMoBudAPI.Services;
+using ShowMoBudAPI.Services.Interfaces;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -15,10 +19,15 @@ builder.Host.UseSerilog();
 
 // Add services to the container.
 
+builder.Services.AddDbContext<ShowMoBudContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//custom services:
+builder.Services.AddScoped<INewsletterService, NewsletterService>();
 
 //adding service for JWT authentication and authorization
 builder.Services.AddScoped<ShowMoBudAPI.Services.JwtService>();

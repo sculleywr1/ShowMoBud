@@ -2,8 +2,59 @@
 
 @using MudBlazor
 @using ShowMoBud.Components
+@using ShowMoBud.DTO
+@using ShowMoBud.Models
+@inject ShowMoBud.Services.Interfaces.INewsletterClient NewsletterClient
 
 <PageTitle>Home</PageTitle>
+
+@* ——— Newsletter Signup (drop-in block) ——— *@
+
+
+
+<MudPaper Class="max-w-xl mx-auto p-6 mt-10">
+    <MudText Typo="Typo.h5" GutterBottom="true">Join our newsletter</MudText>
+    <MudText Typo="Typo.body2" Class="mb-4">
+        Get occasional updates. No spam, unsubscribe anytime.
+    </MudText>
+
+    <EditForm Model="@signup" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <MudStack Spacing="2">
+            <MudTextField @bind-Value="signup.FirstName"
+                          Label="First name"
+                          For="@(() => signup.FirstName)"
+                          Required="true"
+                          Immediate="true" />
+
+            <MudTextField @bind-Value="signup.Email"
+                          Label="Email"
+                          For="@(() => signup.Email)"
+                          Required="true"
+                          InputType="InputType.Email"
+                          Immediate="true" />
+
+            <MudTextField @bind-Value="signup.PhoneNumber"
+                          Label="Phone Number"
+                          For="@(() => signup.PhoneNumber)"
+                          InputType="InputType.Telephone"
+                          Immediate="true" />
+
+            <MudButton Type="Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@submitting">
+                @(submitting ? "Submitting…" : "Subscribe")
+            </MudButton>
+        </MudStack>
+    </EditForm>
+
+    @if (!string.IsNullOrWhiteSpace(message))
+    {
+        <MudAlert Severity="@alertSeverity" Class="mt-3">
+            @message
+        </MudAlert>
+    }
+</MudPaper>
 
 <MudContainer class=" smb-page-pad smb-page-narrow" MaxWidth="MaxWidth.False">
     <MudText Typo="Typo.h5">Find dispensaries near you</MudText>
@@ -11,3 +62,36 @@
     <DispensaryMap />
 </MudContainer>
 
+@code {
+    private NewsletterSignupDto signup = new();  // <- DTO for the form
+    private bool submitting;
+    private string? message;
+    private MudBlazor.Severity alertSeverity = MudBlazor.Severity.Info;
+
+    private async Task HandleSubmit()
+    {
+        message = null;
+        try
+        {
+            submitting = true;
+            var saved = await NewsletterClient.SubscribeAsync(signup);
+            alertSeverity = MudBlazor.Severity.Success;
+            message = "You're in! Check your inbox for a confirmation.";
+            signup = new NewsletterSignupDto(); // reset form
+        }
+        catch (InvalidOperationException)
+        {
+            alertSeverity = MudBlazor.Severity.Warning;
+            message = "That email is already subscribed.";
+        }
+        catch (Exception ex)
+        {
+            alertSeverity = MudBlazor.Severity.Error;
+            message = $"Oops — {ex.Message}";
+        }
+        finally
+        {
+            submitting = false;
+        }
+    }
+}

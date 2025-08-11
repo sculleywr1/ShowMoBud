@@ -1,4 +1,7 @@
-﻿namespace ShowMoBudAPI.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace ShowMoBudAPI.Models;
 
 public partial class UserProfile
 {

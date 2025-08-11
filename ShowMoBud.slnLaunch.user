@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "ShowMoBud\\ShowMoBud.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ShowMoBudAPI\\ShowMoBudAPI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

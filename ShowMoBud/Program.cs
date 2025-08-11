@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using ShowMoBud;
+using ShowMoBud.Services;
+using ShowMoBud.Services.Interfaces;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -12,5 +14,6 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddMudServices();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<ShowMoBud.Services.DispensaryService>();
+builder.Services.AddScoped<INewsletterClient, NewsletterClient>();
 
 await builder.Build().RunAsync();
