@@ -1,16 +1,17 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using ShowMoBudAPI.Models;
+using ShowMoBudAPI.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace ShowMoBudAPI.Services
 {
-    public class JwtService
+    public class JwtService : IJwtService
     {
-        private IConfigurationRoot config;
+        private IConfiguration config;
 
-        public JwtService(IConfigurationRoot config)
+        public JwtService(IConfiguration config)
         {
             this.config = config;
         }
@@ -50,5 +51,7 @@ namespace ShowMoBudAPI.Services
                 Expiration = expires
             };
         }
+
+        
     }
 }

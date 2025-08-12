@@ -30,7 +30,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<INewsletterService, NewsletterService>();
 
 //adding service for JWT authentication and authorization
-builder.Services.AddScoped<ShowMoBudAPI.Services.JwtService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -46,6 +46,19 @@ builder.Services.AddAuthentication("Bearer")
                 System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!))
         };
     });
+var allowedOrigin = builder.Configuration["FrontendOrigin"];
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+
+    options.AddPolicy("ProdOnly", policy =>
+        policy.WithOrigins(allowedOrigin)   // single origin or .WithOrigins("https://app1.com","https://app2.com")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
 
 
 
@@ -64,6 +77,12 @@ try
     }
 
     app.UseHttpsRedirection();
+
+    // Use CORS policy
+    if (app.Environment.IsDevelopment())
+        app.UseCors("AllowAll");
+    else
+        app.UseCors("ProdOnly");
 
     //ensure that the authentication middleware is added before the authorization middleware for proper JWT handling and CORS support
     app.UseAuthentication();

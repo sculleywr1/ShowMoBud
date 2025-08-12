@@ -68,7 +68,9 @@ namespace ShowMoBudAPI.Services
                 _context.SaveChanges();
                 //generate JWT token for the new user
 
-                var token = _jwtService.GenerateToken(newUser.Username, "Free"); //default role is "Free"
+                Role role = new Role { RoleId = 1, RoleName = "Free" }; //default role
+
+                var token = _jwtService.GenerateToken(newUser.Username, role ); //default role is "Free"
 
                 return token;
             }

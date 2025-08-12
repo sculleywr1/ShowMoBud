@@ -5,7 +5,7 @@ namespace ShowMoBudAPI.Services.Interfaces
     public interface IJwtService
     {
 
-        JwtResponse GenerateToken(string username, string roleName);
+        JwtResponse GenerateToken(string username, Role role);
 
     }
 }

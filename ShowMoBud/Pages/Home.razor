@@ -13,10 +13,43 @@
 
 
 <MudPaper Class="max-w-xl mx-auto p-6 mt-10">
-    <MudText Typo="Typo.h5" GutterBottom="true">Join our newsletter</MudText>
-    <MudText Typo="Typo.body2" Class="mb-4">
-        Get occasional updates. No spam, unsubscribe anytime.
+    <div style="text-align:center" class="mb-6">
+    <MudText Typo="Typo.h5" Class="font-weight-bold">
+        Join the Revolution in Reviews! Be Part of a Community That Rewards Your Voice.
     </MudText>
+
+    <MudText Typo="Typo.body1">
+        Discover Showmobud, the ultimate review-based social network where your opinions matter.
+        Whether you're sharing experiences, connecting with others, or holding brands accountable,
+        Showmobud empowers you to make informed decisions and earn rewards for your contributions.
+    </MudText>
+
+    <MudText Typo="Typo.h6" Class="font-weight-bold mt-4">
+        Why Join Showmobud?
+    </MudText>
+
+    <MudList T="string" Style="display:inline-block;text-align:left">
+        <MudListItem>🌟 Authentic Reviews: Get real insights from people in your area.</MudListItem>
+        <MudListItem>🔗 Connect &amp; Share: Build trust and accountability with others in the community.</MudListItem>
+        <MudListItem>💰 Earn Rewards: Your reviews and interactions can earn cryptocurrency incentives.</MudListItem>
+        <MudListItem>🔍 Barcode Power: Scan product barcodes to access reviews, customer experiences, and cross-reference similar products.</MudListItem>
+    </MudList>
+
+    <MudText Typo="Typo.body1" Class="mt-4">
+        Sign up now to stay ahead! Be the first to know when we launch, receive exclusive updates,
+        and claim your spot in the Showmobud community.
+    </MudText>
+
+    <MudText Typo="Typo.body1">
+        👉 Enter your email below to join the movement:
+    </MudText>
+        <MudList T="string" Style="display:inline-block;text-align:left">
+            <MudListItem>🌟 Authentic Reviews: Get real insights from people in your area.</MudListItem>
+            <MudListItem>🔗 Connect &amp; Share: Build trust and accountability with others in the community.</MudListItem>
+            <MudListItem>💰 Earn Rewards: Your reviews and interactions can earn cryptocurrency incentives.</MudListItem>
+            <MudListItem>🔍 Barcode Power: Scan product barcodes to access reviews, customer experiences, and cross-reference similar products.</MudListItem>
+        </MudList>
+</div>
 
     <EditForm Model="@signup" OnValidSubmit="HandleSubmit">
         <DataAnnotationsValidator />
@@ -42,9 +75,13 @@
                           InputType="InputType.Telephone"
                           Immediate="true" />
 
-            <MudButton Type="Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@submitting">
+            <MudButton ButtonType="ButtonType.Submit"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       Disabled="@submitting">
                 @(submitting ? "Submitting…" : "Subscribe")
             </MudButton>
+
         </MudStack>
     </EditForm>
 
