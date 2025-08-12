@@ -49,10 +49,8 @@ namespace ShowMoBud.Components
             // Center the map on the user's location
             await JS.InvokeVoidAsync("smbMap.setView", _userLat, _userLng, 12);
 
-            // Get all dispensaries and filter by those within the search radius
-            var all = Dispensaries.GetAll();
-            var hits = all.Where(d => HaversineMiles(_userLat, _userLng, d.Latitude, d.Longitude) <= _radiusMiles)
-                          .ToList();
+            // Fetch nearby dispensaries from the API
+            var hits = await Dispensaries.GetNearbyAsync(_userLat, _userLng, _radiusMiles);
 
             // Clear any existing markers from the map
             await JS.InvokeVoidAsync("smbMap.clearMarkers");
@@ -67,23 +65,6 @@ namespace ShowMoBud.Components
                 await JS.InvokeVoidAsync("smbMap.addMarker", d.Latitude, d.Longitude, popup);
             }
         }
-
-        // Calculates the distance in miles between two latitude/longitude points using the Haversine formula
-        private static double HaversineMiles(double lat1, double lon1, double lat2, double lon2)
-        {
-            const double R = 3958.7613; // Earth radius in miles
-            double dLat = ToRad(lat2 - lat1);
-            double dLon = ToRad(lon2 - lon1);
-            lat1 = ToRad(lat1); lat2 = ToRad(lat2);
-            double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
-                       Math.Sin(dLon / 2) * Math.Sin(dLon / 2) * Math.Cos(lat1) * Math.Cos(lat2);
-            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            return R * c;
-        }
-
-        // Converts degrees to radians
-        private static double ToRad(double deg) => deg * Math.PI / 180.0;
-
         // Record type for deserializing geolocation results from JS interop
         private record GeoPosition(GeoCoords coords);
         private record GeoCoords(double latitude, double longitude);
