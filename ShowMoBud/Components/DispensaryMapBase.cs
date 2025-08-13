@@ -51,7 +51,8 @@ namespace ShowMoBud.Components
 
             // Get all dispensaries and filter by those within the search radius
             var all = Dispensaries.GetAll();
-            var hits = all.Where(d => HaversineMiles(_userLat, _userLng, d.Latitude, d.Longitude) <= _radiusMiles)
+            var allAddresses = all.SelectMany(d => d.Addresses).ToList();
+            var hits = allAddresses.Where(d => HaversineMiles(_userLat, _userLng, d.Latitude, d.Longitude) <= _radiusMiles)
                           .ToList();
 
             // Clear any existing markers from the map

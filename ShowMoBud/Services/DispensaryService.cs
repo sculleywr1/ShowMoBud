@@ -7,11 +7,25 @@ namespace ShowMoBud.Services
 
         private static readonly List<Dispensary> _all = new()
         {
-
-            new() {Name = "Heya Wellness", Address = "4300 N Service Rd, St. Peters, MO 63376", Latitude = 38.798870, Longitude = -90.583379},
-            new() {Name = "Root 66", Address = "3004 S St Peters Pkwy, St. Peters, MO 63303", Latitude = 38.772820, Longitude = -90.629570},
-            new() {Name = "Kind Goods", Address = "3899 Veterans Memorial,, Ste J, St Peters, MO 63376", Longitude = -90.576820, Latitude = 38.799030},
-            new() {Name = "Mint Cannabis", Address = "150 Mid Rivers Mall Cir, St. Peters, MO 63376", Longitude = -90.576820, Latitude = 38.799030}
+            new()
+            {
+                Name = "Greenlight Dispensary",
+                Addresses =
+                {
+                    new Address
+                    {
+                        FullAddress = "6497 Chippewa St, St. Louis, MO 63109",
+                        Latitude = 38.5928571,
+                        Longitude = -90.3015986
+                    },
+                    new Address
+                    {
+                        FullAddress = "9800 Manchester Rd, Suite C, St. Louis, MO 63119",
+                        Latitude = 38.606623,
+                        Longitude = -90.372594
+                    }
+                }
+            }
         };
 
         public IReadOnlyList<Dispensary> GetAll() => _all;
