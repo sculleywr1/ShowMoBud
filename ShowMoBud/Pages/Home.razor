@@ -10,8 +10,6 @@
 
 @* ——— Newsletter Signup (drop-in block) ——— *@
 
-
-
 <MudPaper Class="max-w-xl mx-auto p-6 mt-10">
     <div style="text-align:center" class="mb-6">
     <MudText Typo="Typo.h5" Class="font-weight-bold">
@@ -116,13 +114,15 @@
             message = "You're in! Check your inbox for a confirmation.";
             signup = new NewsletterSignupDto(); // reset form
         }
-        catch (InvalidOperationException)
+        catch (InvalidOperationException ex)
         {
+            Console.WriteLine($"Newsletter signup failed: email already subscribed. Email={signup.Email}. Exception: {ex}");
             alertSeverity = MudBlazor.Severity.Warning;
             message = "That email is already subscribed.";
         }
         catch (Exception ex)
         {
+            Console.WriteLine($"Unexpected error during newsletter signup. Email={signup.Email}. Exception: {ex}");
             alertSeverity = MudBlazor.Severity.Error;
             message = $"Oops — {ex.Message}";
         }
