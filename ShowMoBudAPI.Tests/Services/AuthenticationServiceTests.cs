@@ -21,7 +21,7 @@ namespace ShowMoBudAPI.Tests.Services
         public AuthenticationServiceTests()
         {
 
-            _mockDbContext = new Mock<ShowMoBudContext>(new DbContextOptions<ShowMoBudContext>());
+            _mockDbContext = new Mock<ShowMoBudContext>();
             _mockEncryptionService = new Mock<IEncryptionService>();
             _mockJwtService = new Mock<IJwtService>();
 
@@ -34,7 +34,7 @@ namespace ShowMoBudAPI.Tests.Services
                 .Returns(new byte[64]);
 
             _mockJwtService
-                .Setup(js => js.GenerateToken(It.IsAny<string>(), It.IsAny<Role>()))
+                .Setup(js => js.GenerateToken(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new JwtResponse
                 {
                     Token = "mocked_token",

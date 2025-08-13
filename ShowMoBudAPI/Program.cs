@@ -28,7 +28,6 @@ builder.Services.AddSwaggerGen();
 
 //custom services:
 builder.Services.AddScoped<INewsletterService, NewsletterService>();
-builder.Services.AddHttpClient();
 
 //adding service for JWT authentication and authorization
 builder.Services.AddScoped<IJwtService, JwtService>();
