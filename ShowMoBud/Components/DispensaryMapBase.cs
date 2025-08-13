@@ -52,8 +52,10 @@ namespace ShowMoBud.Components
             // Get all dispensaries and filter by those within the search radius
             var all = Dispensaries.GetAll();
             var allAddresses = all.SelectMany(d => d.Addresses).ToList();
-            var hits = allAddresses.Where(d => HaversineMiles(_userLat, _userLng, d.Latitude, d.Longitude) <= _radiusMiles)
-                          .ToList();
+            var hits = all
+                .SelectMany(disp => disp.Addresses.Select(addr => new { disp.Name, addr }))
+                .Where(x => HaversineMiles(_userLat, _userLng, x.addr.Latitude, x.addr.Longitude) <= _radiusMiles)
+                .ToList();
 
             // Clear any existing markers from the map
             await JS.InvokeVoidAsync("smbMap.clearMarkers");
@@ -62,10 +64,10 @@ namespace ShowMoBud.Components
             await JS.InvokeVoidAsync("smbMap.addMarker", _userLat, _userLng, "<b>You are here</b>");
 
             // Add a marker for each nearby dispensary
-            foreach (var d in hits)
+            foreach (var hit in hits)
             {
-                var popup = $"<b>{d.Name}</b><br/>{d.Address}";
-                await JS.InvokeVoidAsync("smbMap.addMarker", d.Latitude, d.Longitude, popup);
+                var popup = $"<b>{hit.Name}</b><br/>{hit.addr.FullAddress}";
+                await JS.InvokeVoidAsync("smbMap.addMarker", hit.addr.Latitude, hit.addr.Longitude, popup);
             }
         }
 
