@@ -18,3 +18,23 @@
     border-radius: 16px;
     background-color: black;
 }
+
+/* Map overlay sizing */
+.map-overlay-card {
+    width: min(1000px, 96vw);
+    height: 86vh;
+    background-color: #000;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+    /* DispensaryMap uses .map-toolbar + .smb-map, so give them room */
+    .map-overlay-card .map-toolbar {
+        padding: 8px 12px;
+    }
+
+    .map-overlay-card .smb-map {
+        height: calc(86vh - 56px); /* adjust if your toolbar height changes */
+        width: 100%;
+    }

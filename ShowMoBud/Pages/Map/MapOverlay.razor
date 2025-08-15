@@ -1,0 +1,22 @@
+﻿@using ShowMoBud.Components
+@using MudBlazor
+
+<div class="overlay-backdrop" @onclick="CloseOnBackdrop" @onkeydown="OnKeyDown" tabindex="0">
+    <!-- Stop clicks inside the card from closing -->
+    <MudPaper Class="map-overlay-card" Elevation="8" @onclick:stopPropagation="true">
+        <div style="display:flex; justify-content:flex-end; padding:.5rem;">
+            <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="Close" />
+        </div>
+
+        <DispensaryMap />
+    </MudPaper>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private Task Close() => OnClose.InvokeAsync();
+
+    private Task CloseOnBackdrop() => OnClose.InvokeAsync();
+    private Task OnKeyDown(KeyboardEventArgs e) => e.Key == "Escape" ? OnClose.InvokeAsync() : Task.CompletedTask;
+}
