@@ -34,18 +34,21 @@ namespace ShowMoBud.Components
         // Attempts to find the user's location and update the map with nearby dispensaries
         protected async Task FindNearMe()
         {
-            // Try to get the user's current position using browser geolocation
+            // Try to get the user's current position using browser geolocation via JS interop
             try
             {
-                var pos = await JS.InvokeAsync<GeoPosition>("navigator.geolocation.getCurrentPosition");
+                var pos = await JS.InvokeAsync<GeoPosition>("smbMap.getCurrentPosition");
                 _userLat = pos.coords.latitude;
                 _userLng = pos.coords.longitude;
             }
-            catch
+            catch (Exception ex)
             {
-                // If geolocation fails, fallback to default center (St. Louis)
-            }
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
+                
+            }
             // Center the map on the user's location
             await JS.InvokeVoidAsync("smbMap.setView", _userLat, _userLng, 12);
 

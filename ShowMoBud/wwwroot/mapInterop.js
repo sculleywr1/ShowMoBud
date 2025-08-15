@@ -52,3 +52,27 @@ window.smbMap = (function () {
     };
 
 })();
+
+// Requests the user's current position and returns a Promise for Blazor interop
+window.smbMap = window.smbMap || {};
+window.smbMap.getCurrentPosition = function () {
+    return new Promise(function (resolve, reject) {
+        if (!navigator.geolocation) {
+            reject("Geolocation is not supported.");
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(
+            function (pos) {
+                resolve({
+                    coords: {
+                        latitude: pos.coords.latitude,
+                        longitude: pos.coords.longitude
+                    }
+                });
+            },
+            function (err) {
+                reject(err.message);
+            }
+        );
+    });
+};
