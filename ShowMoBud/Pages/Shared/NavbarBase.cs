@@ -7,7 +7,6 @@ namespace ShowMoBud.Pages.Shared
 
         protected bool _mobileMenuOpen { get; set; }
 
-        [Parameter] public EventCallback OnOpenMap { get; set; }
         [Parameter] public EventCallback OnOpenRegister { get; set; }
 
         protected void OpenMenu() => _mobileMenuOpen = true;
@@ -29,13 +28,5 @@ namespace ShowMoBud.Pages.Shared
             }
         }
 
-        protected async Task TriggerMap()
-        {
-            if (_mobileMenuOpen)
-                _mobileMenuOpen = false;
-
-            if (OnOpenMap.HasDelegate)
-                await OnOpenMap.InvokeAsync();
-        }
     }
 }
