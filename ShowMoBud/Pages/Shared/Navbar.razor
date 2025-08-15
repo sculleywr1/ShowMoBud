@@ -18,7 +18,7 @@
         <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/information">Information</MudButton>
         <MudButton Variant="Variant.Text" Color="Color.Inherit">Community</MudButton>
         <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/events">Events &amp; St Louis Area</MudButton>
-        <MudButton Variant="Variant.Text" Color="Color.Inherit" onclick="TriggerMap">Dispensaries</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Inherit" OnClick="TriggerMap">Dispensaries</MudButton>
         <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/vision">Vision</MudButton>
         <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/roadmap">Road Map</MudButton>
 
@@ -56,7 +56,7 @@
         <MudNavLink Href="/information" Match="NavLinkMatch.Prefix" @onclick="CloseMenu">Information</MudNavLink>
         <MudNavLink Href="/survey" Match="NavLinkMatch.Prefix">Community</MudNavLink>
         <MudNavLink Href="/events" Match="NavLinkMatch.Prefix" @onclick="CloseMenu">Events &amp; St Louis Area</MudNavLink>
-        <MudNavLink Match="NavLinkMatch.Prefix" onclick="TriggerMap">Dispensaries</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.Prefix" @onclick="TriggerMap">Dispensaries</MudNavLink>
         <MudNavLink Href="/vision" Match="NavLinkMatch.Prefix" @onclick="CloseMenu">Vision</MudNavLink>
         <MudNavLink Href="/roadmap" Match="NavLinkMatch.Prefix" @onclick="CloseMenu">Road Map</MudNavLink>
         <MudDivider Class="my-2" />
