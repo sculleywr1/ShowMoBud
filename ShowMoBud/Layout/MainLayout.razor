@@ -10,17 +10,11 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<Navbar OnOpenRegister="OpenRegister"
-        OnOpenMap="OpenMap"/>
+<Navbar OnOpenRegister="OpenRegister" />
 
 <div style="height:64px"></div>
 
 @Body
-
-@if (showMap)
-{
-    <Pages.Map.MapOverlay OnClose="CloseMap" />
-}
 
 @if (showRegister)
 {
@@ -30,7 +24,6 @@
 }
 
 @code {
-    private bool showMap = false;
     private bool showRegister = false;
     public async Task OpenRegister()
     {
@@ -40,17 +33,6 @@
     public async Task CloseRegister()
     {
         showRegister = false;
-        await InvokeAsync(StateHasChanged);
-    }
-
-    public async Task OpenMap()
-    {
-        showMap = true;
-        await InvokeAsync(StateHasChanged);
-    }
-    public async Task CloseMap()
-    {
-        showMap = false;
         await InvokeAsync(StateHasChanged);
     }
 }
