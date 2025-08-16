@@ -15,5 +15,6 @@ builder.Services.AddMudServices();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7249/") });
 builder.Services.AddScoped<ShowMoBud.Services.DispensaryService>();
 builder.Services.AddScoped<INewsletterClient, NewsletterClient>();
+builder.Services.AddScoped<ISurveyClient, SurveyClient>();
 
 await builder.Build().RunAsync();
