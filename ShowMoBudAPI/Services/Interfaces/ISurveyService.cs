@@ -7,8 +7,7 @@ namespace ShowMoBudAPI.Services.Interfaces
     {
 
         Task<List<string>> GetSurveyNamesAsync(CancellationToken ct = default);
-        Task<List<SurveyQuestion>> GetQuestionAsync(string surveyName, CancellationToken ct);
+        Task<List<SurveyQuestion>> GetQuestionsAsync(string surveyName, CancellationToken ct);
         Task<SurveyResponse> AddAsync(SurveyResponseDto dto, CancellationToken ct);
-
     }
 }

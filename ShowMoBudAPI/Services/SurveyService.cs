@@ -11,7 +11,7 @@ namespace ShowMoBudAPI.Services
         private readonly ShowMoBudContext _db;
         public SurveyService(ShowMoBudContext db) => _db = db;
 
-        public Task<List<SurveyQuestion>> GetQuestionAsync(string surveyName, CancellationToken ct = default) =>
+        public Task<List<SurveyQuestion>> GetQuestionsAsync(string surveyName, CancellationToken ct = default) =>
             _db.SurveyQuestions.Where(q => q.SurveyName == surveyName).ToListAsync(ct);
 
         public async Task<SurveyResponse> AddAsync(SurveyResponseDto dto, CancellationToken ct = default)
