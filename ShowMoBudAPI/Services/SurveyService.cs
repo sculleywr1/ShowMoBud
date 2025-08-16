@@ -31,6 +31,7 @@ namespace ShowMoBudAPI.Services
             return entity;
         }
 
-       
+        public Task<List<string>> GetSurveyNamesAsync(CancellationToken ct = default) =>
+            _db.SurveyQuestions.Select(q => q.SurveyName).Distinct().ToListAsync(ct);
     }
 }
