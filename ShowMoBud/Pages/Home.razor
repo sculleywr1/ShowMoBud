@@ -1,128 +1,30 @@
-﻿@page "/"
+@page "/"
 
 @using MudBlazor
-@using ShowMoBud.Components
-@using ShowMoBud.DTO
-@using ShowMoBud.Models
-@inject ShowMoBud.Services.Interfaces.INewsletterClient NewsletterClient
 
 <PageTitle>Home</PageTitle>
 
-@* ——— Newsletter Signup (drop-in block) ——— *@
-
 <MudPaper Class="max-w-xl mx-auto p-6 mt-10">
     <div style="text-align:center" class="mb-6">
-    <MudText Typo="Typo.h5" Class="font-weight-bold">
-        Join the Revolution in Reviews! Be Part of a Community That Rewards Your Voice.
-    </MudText>
+        <MudText Typo="Typo.h5" Class="font-weight-bold">
+            Join the Revolution in Reviews! Be Part of a Community That Rewards Your Voice.
+        </MudText>
 
-    <MudText Typo="Typo.body1">
-        Discover Showmobud, the ultimate review-based social network where your opinions matter.
-        Whether you're sharing experiences, connecting with others, or holding brands accountable,
-        Showmobud empowers you to make informed decisions and earn rewards for your contributions.
-    </MudText>
+        <MudText Typo="Typo.body1">
+            Discover Showmobud, the ultimate review-based social network where your opinions matter.
+            Whether you're sharing experiences, connecting with others, or holding brands accountable,
+            Showmobud empowers you to make informed decisions and earn rewards for your contributions.
+        </MudText>
 
-    <MudText Typo="Typo.h6" Class="font-weight-bold mt-4">
-        Why Join Showmobud?
-    </MudText>
+        <MudText Typo="Typo.h6" Class="font-weight-bold mt-4">
+            Why Join Showmobud?
+        </MudText>
 
-    <MudList T="string" Style="display:inline-block;text-align:left">
-        <MudListItem>🌟 Authentic Reviews: Get real insights from people in your area.</MudListItem>
-        <MudListItem>🔗 Connect &amp; Share: Build trust and accountability with others in the community.</MudListItem>
-        <MudListItem>💰 Earn Rewards: Your reviews and interactions can earn cryptocurrency incentives.</MudListItem>
-        <MudListItem>🔍 Barcode Power: Scan product barcodes to access reviews, customer experiences, and cross-reference similar products.</MudListItem>
-    </MudList>
-
-    <MudText Typo="Typo.body1" Class="mt-4">
-        Sign up now to stay ahead! Be the first to know when we launch, receive exclusive updates,
-        and claim your spot in the Showmobud community.
-    </MudText>
-
-    <MudText Typo="Typo.body1">
-        👉 Enter your email below to join the movement:
-    </MudText>
         <MudList T="string" Style="display:inline-block;text-align:left">
             <MudListItem>🌟 Authentic Reviews: Get real insights from people in your area.</MudListItem>
             <MudListItem>🔗 Connect &amp; Share: Build trust and accountability with others in the community.</MudListItem>
             <MudListItem>💰 Earn Rewards: Your reviews and interactions can earn cryptocurrency incentives.</MudListItem>
             <MudListItem>🔍 Barcode Power: Scan product barcodes to access reviews, customer experiences, and cross-reference similar products.</MudListItem>
         </MudList>
-</div>
-
-    <EditForm Model="@signup" OnValidSubmit="HandleSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <MudStack Spacing="2">
-            <MudTextField @bind-Value="signup.FirstName"
-                          Label="First name"
-                          For="@(() => signup.FirstName)"
-                          Required="true"
-                          Immediate="true" />
-
-            <MudTextField @bind-Value="signup.Email"
-                          Label="Email"
-                          For="@(() => signup.Email)"
-                          Required="true"
-                          InputType="InputType.Email"
-                          Immediate="true" />
-
-            <MudTextField @bind-Value="signup.PhoneNumber"
-                          Label="Phone Number"
-                          For="@(() => signup.PhoneNumber)"
-                          InputType="InputType.Telephone"
-                          Immediate="true" />
-
-            <MudButton ButtonType="ButtonType.Submit"
-                       Variant="Variant.Filled"
-                       Color="Color.Primary"
-                       Disabled="@submitting">
-                @(submitting ? "Submitting…" : "Subscribe")
-            </MudButton>
-
-        </MudStack>
-    </EditForm>
-
-    @if (!string.IsNullOrWhiteSpace(message))
-    {
-        <MudAlert Severity="@alertSeverity" Class="mt-3">
-            @message
-        </MudAlert>
-    }
+    </div>
 </MudPaper>
-
-@code {
-    private NewsletterSignupDto signup = new();  // <- DTO for the form
-    private bool submitting;
-    private string? message;
-    private MudBlazor.Severity alertSeverity = MudBlazor.Severity.Info;
-
-    private async Task HandleSubmit()
-    {
-        message = null;
-        try
-        {
-            submitting = true;
-            var saved = await NewsletterClient.SubscribeAsync(signup);
-            alertSeverity = MudBlazor.Severity.Success;
-            message = "You're in! Check your inbox for a confirmation.";
-            signup = new NewsletterSignupDto(); // reset form
-        }
-        catch (InvalidOperationException ex)
-        {
-            Console.WriteLine($"Newsletter signup failed: email already subscribed. Email={signup.Email}. Exception: {ex}");
-            alertSeverity = MudBlazor.Severity.Warning;
-            message = "That email is already subscribed.";
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Unexpected error during newsletter signup. Email={signup.Email}. Exception: {ex}");
-            alertSeverity = MudBlazor.Severity.Error;
-            message = $"Oops — {ex.Message}";
-        }
-        finally
-        {
-            submitting = false;
-        }
-    }
-}

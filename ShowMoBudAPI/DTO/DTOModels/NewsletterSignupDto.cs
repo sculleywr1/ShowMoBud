@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShowMoBudApi.DTO.DTOModels
+namespace ShowMoBudAPI.DTO.DTOModels
 {
     public class NewsletterSignupDto
     {

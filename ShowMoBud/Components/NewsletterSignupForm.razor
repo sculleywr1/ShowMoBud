@@ -1,0 +1,34 @@
+<EditForm Model="Signup" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudStack Spacing="2">
+        <MudTextField @bind-Value="Signup.FirstName"
+                      Label="First name"
+                      For="@(() => Signup.FirstName)"
+                      Required="true"
+                      Immediate="true" />
+
+        <MudTextField @bind-Value="Signup.Email"
+                      Label="Email"
+                      For="@(() => Signup.Email)"
+                      Required="true"
+                      InputType="InputType.Email"
+                      Immediate="true" />
+
+        <MudTextField @bind-Value="Signup.PhoneNumber"
+                      Label="Phone Number"
+                      For="@(() => Signup.PhoneNumber)"
+                      InputType="InputType.Telephone"
+                      Immediate="true" />
+
+        <MudButton ButtonType="ButtonType.Submit"
+                   Variant="Variant.Filled"
+                   Color="Color.Primary">
+            Subscribe
+        </MudButton>
+    </MudStack>
+</EditForm>
+
+@code {
+    [Parameter] public NewsletterSignupDto Signup { get; set; } = new();
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen();
 
 //custom services:
 builder.Services.AddScoped<INewsletterService, NewsletterService>();
+builder.Services.AddScoped<ISurveyService, SurveyService>();
 
 //adding service for JWT authentication and authorization
 builder.Services.AddScoped<IJwtService, JwtService>();

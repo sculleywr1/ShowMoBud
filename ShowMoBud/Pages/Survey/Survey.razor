@@ -1,19 +1,41 @@
-﻿// Pages/Survey.razor
 @page "/survey"
-@inherits ShowMoBud.Pages.Survey.Survey
 
-<MudPaper Class="max-w-xl mx-auto p-6 mt-10">
-    <MudText Typo="Typo.h5">Quick Survey</MudText>
-    <MudRadioGroup @bind-SelectedOption="_answer">
-        <MudRadio Option="Option1" />
-        <MudRadio Option="Option2" />
-    </MudRadioGroup>
-    <MudButton OnClick="ShowSignup">Submit</MudButton>
-</MudPaper>
+@if (_surveyNames is null)
+{
+    <MudProgressCircular />
+}
+else if (_questions is null)
+{
+    foreach (var name in _surveyNames)
+    {
+        <MudButton Class="m-2" OnClick="@(() => LoadSurvey(name))">@name</MudButton>
+    }
+}
+else
+{
+    <EditForm OnValidSubmit="ShowSignup">
+        @foreach (var q in _questions)
+        {
+            <MudText Typo="Typo.h6">@q.QuestionText</MudText>
+            <MudRadioGroup T="string" @bind-Value="_answers[q.SurveyQuestionId]">
+                <MudRadio T="string" Option="@q.Option1" />
+                <MudRadio T="string" Option="@q.Option2" />
+                @if (!string.IsNullOrEmpty(q.Option3))
+                {
+                    <MudRadio T="string" Option="@q.Option3" />
+                }
+                @if (!string.IsNullOrEmpty(q.Option4))
+                {
+                    <MudRadio T="string" Option="@q.Option4" />
+                }
+            </MudRadioGroup>
+        }
+        <MudButton Type="Submit">Submit</MudButton>
+    </EditForm>
+}
 
 <MudDialog @bind-IsVisible="_showSignup">
     <DialogContent>
-        <NewsletterSignupForm Signup="_submission.Signup"
-                              OnValidSubmit="SendSurvey" />
+        <NewsletterSignupForm Signup="_signup" OnValidSubmit="SendSurvey" />
     </DialogContent>
 </MudDialog>
