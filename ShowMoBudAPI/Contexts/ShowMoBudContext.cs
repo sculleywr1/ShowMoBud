@@ -18,6 +18,10 @@ public partial class ShowMoBudContext : DbContext
 
     public virtual DbSet<SocialLink> SocialLinks { get; set; }
 
+    public virtual DbSet<SurveyQuestion> SurveyQuestions { get; set; }
+
+    public virtual DbSet<SurveyResponse> SurveyResponses { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserPoint> UserPoints { get; set; }
@@ -57,6 +61,34 @@ public partial class ShowMoBudContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__SocialLin__UserI__412EB0B6");
+        });
+
+        modelBuilder.Entity<SurveyQuestion>(entity =>
+        {
+            entity.HasKey(e => e.SurveyQuestionId).HasName("PK__SurveyQu__01A9996F2962F66B");
+
+            entity.Property(e => e.Option1).HasMaxLength(200);
+            entity.Property(e => e.Option2).HasMaxLength(200);
+            entity.Property(e => e.Option3).HasMaxLength(200);
+            entity.Property(e => e.Option4).HasMaxLength(200);
+            entity.Property(e => e.QuestionText).HasMaxLength(500);
+            entity.Property(e => e.SurveyName).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<SurveyResponse>(entity =>
+        {
+            entity.HasKey(e => e.SurveyResponseId).HasName("PK__SurveyRe__3D1369BAC5FF8152");
+
+            entity.Property(e => e.Answer).HasMaxLength(200);
+
+            entity.HasOne(d => d.Signup).WithMany(p => p.SurveyResponses)
+                .HasForeignKey(d => d.SignupId)
+                .HasConstraintName("FK_SurveyResponses_NewsletterSignups");
+
+            entity.HasOne(d => d.SurveyQuestion).WithMany(p => p.SurveyResponses)
+                .HasForeignKey(d => d.SurveyQuestionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SurveyResponses_SurveyQuestions");
         });
 
         modelBuilder.Entity<User>(entity =>
