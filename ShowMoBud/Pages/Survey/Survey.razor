@@ -1,0 +1,19 @@
+﻿// Pages/Survey.razor
+@page "/survey"
+@inherits ShowMoBud.Pages.Survey.Survey
+
+<MudPaper Class="max-w-xl mx-auto p-6 mt-10">
+    <MudText Typo="Typo.h5">Quick Survey</MudText>
+    <MudRadioGroup @bind-SelectedOption="_answer">
+        <MudRadio Option="Option1" />
+        <MudRadio Option="Option2" />
+    </MudRadioGroup>
+    <MudButton OnClick="ShowSignup">Submit</MudButton>
+</MudPaper>
+
+<MudDialog @bind-IsVisible="_showSignup">
+    <DialogContent>
+        <NewsletterSignupForm Signup="_submission.Signup"
+                              OnValidSubmit="SendSurvey" />
+    </DialogContent>
+</MudDialog>
