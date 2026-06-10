@@ -5,7 +5,7 @@ namespace ShowMoBudAPI.Services
 {
     public class EncryptionService
     {
-        public byte[] GenerateSalt(int size = 25)
+        public byte[] GenerateSalt(int size = 64)
         {
             var salt = new byte[size];
             using var rng = RandomNumberGenerator.Create();
@@ -18,7 +18,7 @@ namespace ShowMoBudAPI.Services
         // the temporary password byte array is cleared after use to reduce memory exposure.
         public Byte[] HashPassword(string password, byte[] salt)
         {
-            const int iterations = 100_000; // Increase to slow brute-force (tunable)
+            const int iterations = 600_000; // Increase to slow brute-force (tunable)
             const int derivedKeyLength = 64; // 64 bytes = 512 bits (SHA-512 sized)
 
             // Encode password to UTF-8 bytes (temporary array)
@@ -30,8 +30,8 @@ namespace ShowMoBudAPI.Services
                 ReadOnlySpan<byte> passwordSpan = passwordBytes;
 
                 // Create PBKDF2 instance using SHA-512 and derive the key
-                using var pbkdf2 = new Rfc2898DeriveBytes(passwordSpan, salt, iterations, HashAlgorithmName.SHA512);
-                return pbkdf2.GetBytes(derivedKeyLength);
+                
+                return Rfc2898DeriveBytes.Pbkdf2(passwordSpan, salt, iterations, HashAlgorithmName.SHA512, derivedKeyLength);
             }
             finally
             {
